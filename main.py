@@ -13,6 +13,7 @@ class Car:
         self.dir = 0
         self.speed = 0
         self.turning = 0
+        self.accel = False
     
     def render(self):
         rect = pygame.surface.Surface((100, 50))
@@ -25,6 +26,10 @@ class Car:
             self.dir += 0.001
         elif self.turning == -1:
             self.dir -= 0.001
+        
+        acceleration_rate = 0.0005
+
+        self.speed = max(0, self.speed - acceleration_rate) if not self.accel else min(2, self.speed + acceleration_rate)
 
         vert_vel = sin(self.dir) * self.speed
         hori_vel = cos(self.dir) * self.speed
@@ -54,7 +59,8 @@ while run:
         
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_w:
-                c.speed = 1
+                c.accel = True
+                # c.speed = 1
             elif event.key == pygame.K_d:
                 c.turning = 1
             elif event.key == pygame.K_a:
@@ -62,7 +68,7 @@ while run:
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_w:
-                c.speed = 0
+                c.accel = False
             elif event.key == pygame.K_d and c.turning == 1:
                 c.turning = 0
             elif event.key == pygame.K_a and c.turning == -1:
