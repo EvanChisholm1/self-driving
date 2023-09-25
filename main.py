@@ -16,7 +16,8 @@ class Car:
         self.accel = False
     
     def render(self):
-        rect = pygame.surface.Surface((100, 50))
+        rect = pygame.surface.Surface((100, 50)).convert_alpha()
+        rect.fill((0, 0, 0, 0))
         rect.blit(arrow, (0, 0, 100, 50))
         rotated = pygame.transform.rotate(rect, -degrees(self.dir))
         self.window.blit(rotated, rotated.get_rect(center = (self.x, self.y)))
@@ -37,7 +38,18 @@ class Car:
         self.x += hori_vel * 0.1
         self.y += vert_vel * 0.1
     
-
+class Track:
+    def __init__(self, window):
+        self.points = []
+        self.window = window
+    
+    def add_point(self, point):
+        self.points.append(point)
+        return self
+    
+    def render(self):
+        for p1, p2 in zip(self.points, self.points[1:]):
+            pygame.draw.line(self.window, (255, 0, 0), p1, p2, 100)
 
 pygame.init()
 window = pygame.display.set_mode((800, 800))
@@ -45,9 +57,12 @@ pygame.display.set_caption("Self Driving Car")
 
 run = True
 c = Car(50, 50, window)
+t = Track(window)
+t.add_point((100, 100)).add_point((700, 100)).add_point((700, 700)).add_point((100, 700)).add_point((100, 100))
 
 while run:
     window.fill((0, 0, 0))
+    t.render()
     c.render()
     c.update()
     pygame.display.update()

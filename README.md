@@ -4,11 +4,12 @@ This is a playground for me to experiment with neural networks and reinforcement
 
 ## Todo
 
--   [ ] add acceleration physics
--   [ ] add track
+-   [x] add acceleration physics
+-   [x] add track
 -   [ ] add logic to tell if car is on track
 -   [ ] add actual car image
 -   [ ] figure out neural network architechure, inputs and outputs
 -   [ ] train network
 -   [ ] test
+-   [ ] add track editor
 -   [ ] 3d evironment
